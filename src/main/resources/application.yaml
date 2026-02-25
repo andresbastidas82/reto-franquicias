@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: franchise-service
+  sql:
+    init:
+      mode: always
+      platform: postgres
+  r2dbc:
+    url: r2dbc:postgresql://${DB_URL:localhost:5432/franchise_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:123456}
+    pool:
+      max-size: 10
