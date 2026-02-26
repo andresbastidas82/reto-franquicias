@@ -13,6 +13,7 @@ public enum TechnicalMessage {
 
     FRANCHISE_CREATED(201, "Franchise created successfully", ""),
     FRANCHISE_NOT_FOUND(404, "Franchise not found", ""),
+    FRANCHISE_UPDATED(200, "Franchise updated successfully", ""),
 
     BRANCH_CREATED(201, "Branch created successfully", ""),
     BRANCH_NOT_FOUND(404, "Branch not found", ""),
