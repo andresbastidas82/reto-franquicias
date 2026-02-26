@@ -2,7 +2,7 @@ package com.pragma.franchise.application.config;
 
 import com.pragma.franchise.domain.api.franchise.CreateFranchiseServicePort;
 import com.pragma.franchise.domain.spi.FranchisePersistencePort;
-import com.pragma.franchise.domain.usecase.franchise.CreateCreateFranchiseUseCase;
+import com.pragma.franchise.domain.usecase.franchise.CreateFranchiseUseCase;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.FranchisePersistenceAdapter;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.mapper.FranchiseEntityMapper;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.repository.FranchiseRepository;
@@ -22,6 +22,6 @@ public class FranchiseUseCasesConfig {
     @Bean
     public CreateFranchiseServicePort franchisesServicePort(
             FranchisePersistencePort franchisePersistencePort){
-        return new CreateCreateFranchiseUseCase(franchisePersistencePort);
+        return new CreateFranchiseUseCase(franchisePersistencePort);
     }
 }

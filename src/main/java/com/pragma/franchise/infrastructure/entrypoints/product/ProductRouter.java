@@ -14,6 +14,7 @@ public class ProductRouter {
     public RouterFunction<ServerResponse> productsRouter(ProductHandler handler) {
         return RouterFunctions.route()
                 .POST("/api/v1/products", handler::createProduct)
+                .DELETE("/api/v1/products/{id}", handler::deleteProduct)
                 .build();
     }
 }

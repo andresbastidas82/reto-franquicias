@@ -8,4 +8,8 @@ public interface ProductPersistencePort {
     Mono<Product> save(Product product);
 
     Mono<Boolean> existsByNameAndBranchId(String name, Long branchId);
+
+    Mono<Product> findById(Long id);
+
+    Mono<Void> deleteById(Long productId);
 }

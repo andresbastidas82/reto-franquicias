@@ -2,10 +2,12 @@ package com.pragma.franchise.infrastructure.entrypoints.product.handler;
 
 
 import com.pragma.franchise.domain.api.product.CreateProductServicePort;
+import com.pragma.franchise.domain.api.product.DeleteProductServicePort;
 import com.pragma.franchise.domain.enums.TechnicalMessage;
 import com.pragma.franchise.infrastructure.entrypoints.dto.GenericResponse;
 import com.pragma.franchise.infrastructure.entrypoints.product.dto.ProductRequestDTO;
 import com.pragma.franchise.infrastructure.entrypoints.product.mapper.ProductMapper;
+import com.pragma.franchise.infrastructure.utils.RequestParamExtractor;
 import com.pragma.franchise.infrastructure.utils.ValidatorHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import reactor.core.publisher.Mono;
 public class ProductHandler {
 
     private final CreateProductServicePort createProductServicePort;
+    private final DeleteProductServicePort deleteProductServicePort;
     private final ProductMapper mapper;
     private final ValidatorHelper validator;
 
@@ -37,6 +40,13 @@ public class ProductHandler {
                                 .statusCode(TechnicalMessage.PRODUCT_CREATED.getCode())
                                 .data(response).build())
                 );
+    }
+
+    public Mono<ServerResponse> deleteProduct(ServerRequest request) {
+        return RequestParamExtractor
+                .extractLongPathVariable(request.pathVariable("id"), "Product id")
+                .flatMap(deleteProductServicePort::deleteProductById)
+                .then(ServerResponse.noContent().build());
     }
 
 }

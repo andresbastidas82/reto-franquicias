@@ -8,13 +8,13 @@ import com.pragma.franchise.domain.spi.BranchPersistencePort;
 import com.pragma.franchise.domain.spi.FranchisePersistencePort;
 import reactor.core.publisher.Mono;
 
-public class CreateCreateBranchUseCase implements CreateBranchServicePort {
+public class CreateBranchUseCase implements CreateBranchServicePort {
 
     private final BranchPersistencePort branchPersistencePort;
     private final FranchisePersistencePort franchisePersistencePort;
 
-    public CreateCreateBranchUseCase(BranchPersistencePort branchPersistencePort,
-                                     FranchisePersistencePort franchisePersistencePort) {
+    public CreateBranchUseCase(BranchPersistencePort branchPersistencePort,
+                               FranchisePersistencePort franchisePersistencePort) {
         this.branchPersistencePort = branchPersistencePort;
         this.franchisePersistencePort = franchisePersistencePort;
     }

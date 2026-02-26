@@ -1,9 +1,11 @@
 package com.pragma.franchise.application.config;
 
 import com.pragma.franchise.domain.api.product.CreateProductServicePort;
+import com.pragma.franchise.domain.api.product.DeleteProductServicePort;
 import com.pragma.franchise.domain.spi.BranchPersistencePort;
 import com.pragma.franchise.domain.spi.ProductPersistencePort;
-import com.pragma.franchise.domain.usecase.product.CreateCreateProductUseCase;
+import com.pragma.franchise.domain.usecase.product.CreateProductUseCase;
+import com.pragma.franchise.domain.usecase.product.DeleteProductUseCase;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.ProductPersistenceAdapter;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.mapper.ProductEntityMapper;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.repository.ProductRepository;
@@ -21,10 +23,15 @@ public class ProductUseCasesConfig {
     }
 
     @Bean
-    public CreateProductServicePort productServicePort(
+    public CreateProductServicePort createProductServicePort(
             ProductPersistencePort productPersistencePort,
             BranchPersistencePort branchPersistencePort) {
+        return new CreateProductUseCase(productPersistencePort, branchPersistencePort);
+    }
 
-        return new CreateCreateProductUseCase(productPersistencePort, branchPersistencePort);
+    @Bean
+    public DeleteProductServicePort deleteProductServicePort(
+            ProductPersistencePort productPersistencePort) {
+        return new DeleteProductUseCase(productPersistencePort);
     }
 }
