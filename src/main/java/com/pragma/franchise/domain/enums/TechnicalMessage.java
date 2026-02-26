@@ -17,6 +17,9 @@ public enum TechnicalMessage {
     BRANCH_CREATED(201, "Branch created successfully", ""),
     BRANCH_NOT_FOUND(404, "Branch not found", ""),
 
+    PRODUCT_CREATED(201, "Product created successfully", ""),
+    PRODUCT_ALREADY_EXISTS(409, "Product already exists." , ""),
+
     UNSUPPORTED_OPERATION(501, "Method not supported, please try again", ""),
     FRANCHISE_ALREADY_EXISTS(409,"Franchise already exists." ,"" );
 

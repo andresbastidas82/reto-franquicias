@@ -1,10 +1,11 @@
-package com.pragma.franchise.infrastructure.entrypoints.branch.handler;
+package com.pragma.franchise.infrastructure.entrypoints.product.handler;
 
-import com.pragma.franchise.domain.api.branch.CreateBranchServicePort;
+
+import com.pragma.franchise.domain.api.product.CreateProductServicePort;
 import com.pragma.franchise.domain.enums.TechnicalMessage;
-import com.pragma.franchise.infrastructure.entrypoints.branch.dto.BranchRequestDTO;
-import com.pragma.franchise.infrastructure.entrypoints.branch.mapper.BranchMapper;
 import com.pragma.franchise.infrastructure.entrypoints.dto.GenericResponse;
+import com.pragma.franchise.infrastructure.entrypoints.product.dto.ProductRequestDTO;
+import com.pragma.franchise.infrastructure.entrypoints.product.mapper.ProductMapper;
 import com.pragma.franchise.infrastructure.utils.ValidatorHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,24 +18,25 @@ import reactor.core.publisher.Mono;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class BranchHandler {
+public class ProductHandler {
 
-    private final CreateBranchServicePort createBranchServicePort;
-    private final BranchMapper mapper;
+    private final CreateProductServicePort createProductServicePort;
+    private final ProductMapper mapper;
     private final ValidatorHelper validator;
 
-    public Mono<ServerResponse> createBranch(ServerRequest request) {
-        return request.bodyToMono(BranchRequestDTO.class)
+    public Mono<ServerResponse> createProduct(ServerRequest request) {
+        return request.bodyToMono(ProductRequestDTO.class)
                 .flatMap(validator::validate)
                 .map(mapper::toModel)
-                .flatMap(createBranchServicePort::createBranch)
+                .flatMap(createProductServicePort::createProduct)
                 .flatMap(response -> ServerResponse
                         .status(HttpStatus.CREATED)
                         .bodyValue(GenericResponse.builder()
-                                .message(TechnicalMessage.BRANCH_CREATED.getMessage())
+                                .message(TechnicalMessage.PRODUCT_CREATED.getMessage())
                                 .isSuccess(true)
-                                .statusCode(TechnicalMessage.BRANCH_CREATED.getCode())
+                                .statusCode(TechnicalMessage.PRODUCT_CREATED.getCode())
                                 .data(response).build())
                 );
     }
+
 }

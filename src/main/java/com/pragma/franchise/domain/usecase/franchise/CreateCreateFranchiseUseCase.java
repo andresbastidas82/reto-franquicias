@@ -1,17 +1,17 @@
 package com.pragma.franchise.domain.usecase.franchise;
 
-import com.pragma.franchise.domain.api.FranchiseServicePort;
+import com.pragma.franchise.domain.api.franchise.CreateFranchiseServicePort;
 import com.pragma.franchise.domain.enums.TechnicalMessage;
 import com.pragma.franchise.domain.exceptions.BusinessException;
 import com.pragma.franchise.domain.model.Franchise;
 import com.pragma.franchise.domain.spi.FranchisePersistencePort;
 import reactor.core.publisher.Mono;
 
-public class CreateFranchiseUseCase implements FranchiseServicePort {
+public class CreateCreateFranchiseUseCase implements CreateFranchiseServicePort {
 
     private final FranchisePersistencePort franchisePersistencePort;
 
-    public CreateFranchiseUseCase(FranchisePersistencePort franchisePersistencePort) {
+    public CreateCreateFranchiseUseCase(FranchisePersistencePort franchisePersistencePort) {
         this.franchisePersistencePort = franchisePersistencePort;
     }
 
