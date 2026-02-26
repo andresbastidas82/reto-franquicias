@@ -1,9 +1,11 @@
 package com.pragma.franchise.application.config;
 
 import com.pragma.franchise.domain.api.branch.CreateBranchServicePort;
+import com.pragma.franchise.domain.api.branch.UpdateBranchServicePort;
 import com.pragma.franchise.domain.spi.BranchPersistencePort;
 import com.pragma.franchise.domain.spi.FranchisePersistencePort;
 import com.pragma.franchise.domain.usecase.branch.CreateBranchUseCase;
+import com.pragma.franchise.domain.usecase.branch.UpdateBranchUseCase;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.BranchPersistenceAdapter;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.mapper.BranchEntityMapper;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.repository.BranchRepository;
@@ -21,9 +23,15 @@ public class BranchUseCasesConfig {
     }
 
     @Bean
-    public CreateBranchServicePort branchServicePort(
+    public CreateBranchServicePort createBranchServicePort(
             BranchPersistencePort branchPersistencePort,
             FranchisePersistencePort franchisePersistencePort) {
         return new CreateBranchUseCase(branchPersistencePort, franchisePersistencePort);
+    }
+
+    @Bean
+    public UpdateBranchServicePort updateBranchServicePort(
+            BranchPersistencePort branchPersistencePort) {
+        return new UpdateBranchUseCase(branchPersistencePort);
     }
 }
