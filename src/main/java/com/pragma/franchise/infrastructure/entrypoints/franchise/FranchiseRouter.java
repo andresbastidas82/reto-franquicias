@@ -15,6 +15,7 @@ public class FranchiseRouter {
     public RouterFunction<ServerResponse> franchiseRouterFunction(FranchiseHandler handler) {
         return RouterFunctions.route()
                 .POST("/api/v1/franchise", handler::createFranchise)
+                .PATCH("/api/v1/franchise/{id}", handler::updateNameFranchise)
                 .build();
     }
 }
