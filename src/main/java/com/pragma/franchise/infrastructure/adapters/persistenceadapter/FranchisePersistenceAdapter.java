@@ -24,4 +24,10 @@ public class FranchisePersistenceAdapter implements FranchisePersistencePort {
     public Mono<Boolean> existByName(String name) {
         return franchiseRepository.existsByName(name);
     }
+
+    @Override
+    public Mono<Franchise> findById(Long id) {
+        return franchiseRepository.findById(id)
+                .map(franchiseEntityMapper::toModel);
+    }
 }
