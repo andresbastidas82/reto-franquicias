@@ -3,6 +3,7 @@ package com.pragma.franchise.infrastructure.entrypoints.product.handler;
 
 import com.pragma.franchise.domain.api.product.CreateProductServicePort;
 import com.pragma.franchise.domain.api.product.DeleteProductServicePort;
+import com.pragma.franchise.domain.api.product.TopProductServicePort;
 import com.pragma.franchise.domain.api.product.UpdateProductServicePort;
 import com.pragma.franchise.domain.enums.TechnicalMessage;
 import com.pragma.franchise.infrastructure.entrypoints.dto.GenericResponse;
@@ -26,6 +27,7 @@ public class ProductHandler {
     private final CreateProductServicePort createProductServicePort;
     private final DeleteProductServicePort deleteProductServicePort;
     private final UpdateProductServicePort updateProductServicePort;
+    private final TopProductServicePort topProductServicePort;
     private final ProductMapper mapper;
     private final ValidatorHelper validator;
 
@@ -83,6 +85,22 @@ public class ProductHandler {
                                 .data(response)
                                 .build())
                 );
+    }
+
+    public Mono<ServerResponse> getTopStockProducts(ServerRequest request) {
+        return RequestParamExtractor
+                .extractLongPathVariable(request.pathVariable("franchiseId"), "Franchise id")
+                .flatMap(id ->topProductServicePort.getTopStockProducts(id).collectList())
+                .flatMap(response -> ServerResponse
+                        .status(HttpStatus.OK)
+                        .bodyValue(GenericResponse.builder()
+                                .message(TechnicalMessage.TOP_STOCK_PRODUCTS.getMessage())
+                                .isSuccess(true)
+                                .statusCode(TechnicalMessage.TOP_STOCK_PRODUCTS.getCode())
+                                .data(response)
+                                .build())
+                );
+
     }
 
 }
