@@ -1,6 +1,6 @@
 package com.pragma.franchise.infrastructure.entrypoints.franchise.handler;
 
-import com.pragma.franchise.domain.api.FranchiseServicePort;
+import com.pragma.franchise.domain.api.franchise.CreateFranchiseServicePort;
 import com.pragma.franchise.domain.enums.TechnicalMessage;
 import com.pragma.franchise.infrastructure.entrypoints.dto.GenericResponse;
 import com.pragma.franchise.infrastructure.entrypoints.franchise.dto.FranchiseRequestDTO;
@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class FranchiseHandler {
 
-    private final FranchiseServicePort franchiseServicePort;
+    private final CreateFranchiseServicePort createFranchiseServicePort;
     private final FranchiseMapper mapper;
     private final ValidatorHelper validator;
 
@@ -27,7 +27,7 @@ public class FranchiseHandler {
         return request.bodyToMono(FranchiseRequestDTO.class)
                 .flatMap(validator::validate)
                 .map(mapper::toModel)
-                .flatMap(franchiseServicePort::createFranchise)
+                .flatMap(createFranchiseServicePort::createFranchise)
                 .flatMap(response -> ServerResponse
                         .status(HttpStatus.CREATED)
                         .bodyValue(GenericResponse.builder()

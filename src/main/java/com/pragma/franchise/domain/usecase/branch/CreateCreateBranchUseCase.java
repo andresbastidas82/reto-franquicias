@@ -1,6 +1,6 @@
 package com.pragma.franchise.domain.usecase.branch;
 
-import com.pragma.franchise.domain.api.BranchServicePort;
+import com.pragma.franchise.domain.api.branch.CreateBranchServicePort;
 import com.pragma.franchise.domain.enums.TechnicalMessage;
 import com.pragma.franchise.domain.exceptions.NotFoundException;
 import com.pragma.franchise.domain.model.Branch;
@@ -8,13 +8,13 @@ import com.pragma.franchise.domain.spi.BranchPersistencePort;
 import com.pragma.franchise.domain.spi.FranchisePersistencePort;
 import reactor.core.publisher.Mono;
 
-public class CreateBranchUseCase implements BranchServicePort {
+public class CreateCreateBranchUseCase implements CreateBranchServicePort {
 
     private final BranchPersistencePort branchPersistencePort;
     private final FranchisePersistencePort franchisePersistencePort;
 
-    public CreateBranchUseCase(BranchPersistencePort branchPersistencePort,
-                               FranchisePersistencePort franchisePersistencePort) {
+    public CreateCreateBranchUseCase(BranchPersistencePort branchPersistencePort,
+                                     FranchisePersistencePort franchisePersistencePort) {
         this.branchPersistencePort = branchPersistencePort;
         this.franchisePersistencePort = franchisePersistencePort;
     }
