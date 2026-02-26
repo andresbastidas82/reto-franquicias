@@ -1,9 +1,11 @@
 package com.pragma.franchise.infrastructure.adapters.persistenceadapter;
 
 import com.pragma.franchise.domain.model.Product;
+import com.pragma.franchise.domain.model.TopStockProduct;
 import com.pragma.franchise.domain.spi.ProductPersistencePort;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.mapper.ProductEntityMapper;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.repository.ProductRepository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class ProductPersistenceAdapter implements ProductPersistencePort {
@@ -36,6 +38,11 @@ public class ProductPersistenceAdapter implements ProductPersistencePort {
     @Override
     public Mono<Void> deleteById(Long productId) {
         return productRepository.deleteById(productId);
+    }
+
+    @Override
+    public Flux<TopStockProduct> getTopStockProducts(Long franchiseId) {
+        return productRepository.findTopStockProductsByFranchise(franchiseId);
     }
 
 }

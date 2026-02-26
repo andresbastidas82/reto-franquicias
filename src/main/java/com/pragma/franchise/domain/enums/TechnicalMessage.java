@@ -23,6 +23,7 @@ public enum TechnicalMessage {
     PRODUCT_DELETED(204, "Product deleted successfully", ""),
     PRODUCT_NOT_BRANCH(404, "Product not found in branch", ""),
     PRODUCT_UPDATED(200, "Product updated successfully", ""),
+    TOP_STOCK_PRODUCTS(200, "Top stock products by branches", ""),
 
     UNSUPPORTED_OPERATION(501, "Method not supported, please try again", ""),
     FRANCHISE_ALREADY_EXISTS(409,"Franchise already exists." ,"" );
