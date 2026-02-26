@@ -3,6 +3,7 @@ package com.pragma.franchise.infrastructure.exceptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pragma.franchise.domain.exceptions.BadRequestException;
 import com.pragma.franchise.domain.exceptions.BusinessException;
+import com.pragma.franchise.domain.exceptions.NotFoundException;
 import com.pragma.franchise.infrastructure.entrypoints.dto.GenericResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,9 @@ public final class GlobalExceptionHandler implements ErrorWebExceptionHandler {
         }
         if (ex instanceof BadRequestException badRequestEx) {
             return buildErrorResponse(HttpStatus.BAD_REQUEST, badRequestEx.getMessage(), ERROR_MESSAGE);
+        }
+        if (ex instanceof NotFoundException notFoundEx) {
+            return buildErrorResponse(HttpStatus.NOT_FOUND, notFoundEx.getMessage(), ERROR_MESSAGE);
         }
         return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_ERROR, ERROR_MESSAGE);
     }

@@ -18,7 +18,7 @@ public class CreateFranchiseUseCase implements FranchiseServicePort {
     @Override
     public Mono<Franchise> createFranchise(Franchise franchise) {
         return franchisePersistencePort.existByName(franchise.getName())
-                .flatMap(exist -> exist
+                .flatMap(exist -> Boolean.TRUE.equals(exist)
                         ? Mono.error(new BusinessException(TechnicalMessage.FRANCHISE_ALREADY_EXISTS))
                         : franchisePersistencePort.save(franchise));
     }
