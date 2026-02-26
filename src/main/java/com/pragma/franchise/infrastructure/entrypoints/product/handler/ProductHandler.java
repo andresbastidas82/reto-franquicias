@@ -3,6 +3,7 @@ package com.pragma.franchise.infrastructure.entrypoints.product.handler;
 
 import com.pragma.franchise.domain.api.product.CreateProductServicePort;
 import com.pragma.franchise.domain.api.product.DeleteProductServicePort;
+import com.pragma.franchise.domain.api.product.UpdateProductServicePort;
 import com.pragma.franchise.domain.enums.TechnicalMessage;
 import com.pragma.franchise.infrastructure.entrypoints.dto.GenericResponse;
 import com.pragma.franchise.infrastructure.entrypoints.product.dto.ProductRequestDTO;
@@ -24,6 +25,7 @@ public class ProductHandler {
 
     private final CreateProductServicePort createProductServicePort;
     private final DeleteProductServicePort deleteProductServicePort;
+    private final UpdateProductServicePort updateProductServicePort;
     private final ProductMapper mapper;
     private final ValidatorHelper validator;
 
@@ -47,6 +49,40 @@ public class ProductHandler {
                 .extractLongPathVariable(request.pathVariable("id"), "Product id")
                 .flatMap(deleteProductServicePort::deleteProductById)
                 .then(ServerResponse.noContent().build());
+    }
+
+    public Mono<ServerResponse> updateStockProduct(ServerRequest request) {
+        return Mono.zip(
+                        RequestParamExtractor.extractLongPathVariable(request.pathVariable("id"), "Product id"),
+                        request.bodyToMono(ProductRequestDTO.class)
+                )
+                .flatMap(tuple -> updateProductServicePort.updateStockProduct(tuple.getT1(), tuple.getT2().stock()))
+                .flatMap(response -> ServerResponse
+                        .status(HttpStatus.OK)
+                        .bodyValue(GenericResponse.builder()
+                                .message(TechnicalMessage.PRODUCT_UPDATED.getMessage())
+                                .isSuccess(true)
+                                .statusCode(TechnicalMessage.PRODUCT_UPDATED.getCode())
+                                .data(response)
+                                .build())
+                );
+    }
+
+    public Mono<ServerResponse> updateNameProduct(ServerRequest request) {
+        return Mono.zip(
+                        RequestParamExtractor.extractLongPathVariable(request.pathVariable("id"), "Product id"),
+                        request.bodyToMono(ProductRequestDTO.class)
+                )
+                .flatMap(tuple -> updateProductServicePort.updateNameProduct(tuple.getT1(), tuple.getT2().name()))
+                .flatMap(response -> ServerResponse
+                        .status(HttpStatus.OK)
+                        .bodyValue(GenericResponse.builder()
+                                .message(TechnicalMessage.PRODUCT_UPDATED.getMessage())
+                                .isSuccess(true)
+                                .statusCode(TechnicalMessage.PRODUCT_UPDATED.getCode())
+                                .data(response)
+                                .build())
+                );
     }
 
 }
