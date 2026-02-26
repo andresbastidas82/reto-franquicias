@@ -16,6 +16,9 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import static com.pragma.franchise.infrastructure.constants.Constants.FRANCHISE_ID;
+import static com.pragma.franchise.infrastructure.constants.Constants.ID;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -37,13 +40,13 @@ public class FranchiseHandler {
                                 .message(TechnicalMessage.FRANCHISE_CREATED.getMessage())
                                 .isSuccess(true)
                                 .statusCode(TechnicalMessage.FRANCHISE_CREATED.getCode())
-                                .data(response).build())
+                                .data(mapper.toResponseDto(response)).build())
                 );
     }
 
     public Mono<ServerResponse> updateNameFranchise(ServerRequest request) {
         return RequestParamExtractor
-                .extractLongPathVariable(request.pathVariable("id"), "Franchise id")
+                .extractLongPathVariable(request.pathVariable(ID), FRANCHISE_ID)
                 .flatMap(id ->
                         request.bodyToMono(FranchiseRequestDTO.class)
                                 .flatMap(validator::validate)
@@ -55,7 +58,7 @@ public class FranchiseHandler {
                                         .message(TechnicalMessage.FRANCHISE_UPDATED.getMessage())
                                         .isSuccess(true)
                                         .statusCode(TechnicalMessage.FRANCHISE_UPDATED.getCode())
-                                        .data(response)
+                                        .data(mapper.toResponseDto(response))
                                         .build()
                         )
                 );

@@ -17,6 +17,7 @@ public enum TechnicalMessage {
 
     BRANCH_CREATED(201, "Branch created successfully", ""),
     BRANCH_NOT_FOUND(404, "Branch not found", ""),
+    BRANCH_UPDATED(200, "Branch updated successfully", ""),
 
     PRODUCT_CREATED(201, "Product created successfully", ""),
     PRODUCT_ALREADY_EXISTS(409, "Product already exists." , ""),

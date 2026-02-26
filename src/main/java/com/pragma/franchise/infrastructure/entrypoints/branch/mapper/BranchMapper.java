@@ -2,6 +2,7 @@ package com.pragma.franchise.infrastructure.entrypoints.branch.mapper;
 
 import com.pragma.franchise.domain.model.Branch;
 import com.pragma.franchise.infrastructure.entrypoints.branch.dto.BranchRequestDTO;
+import com.pragma.franchise.infrastructure.entrypoints.branch.dto.BranchResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -9,4 +10,6 @@ import org.mapstruct.ReportingPolicy;
 public interface BranchMapper {
 
     Branch toModel(BranchRequestDTO branchRequestDTO);
+
+    BranchResponseDTO toResponseDto(Branch branch);
 }
