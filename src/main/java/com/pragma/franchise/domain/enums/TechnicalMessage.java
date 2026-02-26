@@ -19,6 +19,9 @@ public enum TechnicalMessage {
 
     PRODUCT_CREATED(201, "Product created successfully", ""),
     PRODUCT_ALREADY_EXISTS(409, "Product already exists." , ""),
+    PRODUCT_NOT_FOUND(404, "Product not found", ""),
+    PRODUCT_DELETED(204, "Product deleted successfully", ""),
+    PRODUCT_NOT_BRANCH(404, "Product not found in branch", ""),
 
     UNSUPPORTED_OPERATION(501, "Method not supported, please try again", ""),
     FRANCHISE_ALREADY_EXISTS(409,"Franchise already exists." ,"" );

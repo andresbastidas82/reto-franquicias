@@ -9,11 +9,11 @@ import com.pragma.franchise.domain.spi.BranchPersistencePort;
 import com.pragma.franchise.domain.spi.ProductPersistencePort;
 import reactor.core.publisher.Mono;
 
-public class CreateCreateProductUseCase implements CreateProductServicePort {
+public class CreateProductUseCase implements CreateProductServicePort {
     private final ProductPersistencePort productPersistencePort;
     private final BranchPersistencePort branchPersistencePort;
 
-    public CreateCreateProductUseCase(ProductPersistencePort productPersistencePort, BranchPersistencePort branchPersistencePort) {
+    public CreateProductUseCase(ProductPersistencePort productPersistencePort, BranchPersistencePort branchPersistencePort) {
         this.productPersistencePort = productPersistencePort;
         this.branchPersistencePort = branchPersistencePort;
     }

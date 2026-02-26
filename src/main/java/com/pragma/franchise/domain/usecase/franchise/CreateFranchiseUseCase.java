@@ -7,11 +7,11 @@ import com.pragma.franchise.domain.model.Franchise;
 import com.pragma.franchise.domain.spi.FranchisePersistencePort;
 import reactor.core.publisher.Mono;
 
-public class CreateCreateFranchiseUseCase implements CreateFranchiseServicePort {
+public class CreateFranchiseUseCase implements CreateFranchiseServicePort {
 
     private final FranchisePersistencePort franchisePersistencePort;
 
-    public CreateCreateFranchiseUseCase(FranchisePersistencePort franchisePersistencePort) {
+    public CreateFranchiseUseCase(FranchisePersistencePort franchisePersistencePort) {
         this.franchisePersistencePort = franchisePersistencePort;
     }
 

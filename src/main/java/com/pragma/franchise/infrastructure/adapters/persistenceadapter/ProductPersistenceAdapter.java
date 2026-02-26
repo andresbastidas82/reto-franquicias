@@ -26,4 +26,16 @@ public class ProductPersistenceAdapter implements ProductPersistencePort {
     public Mono<Boolean> existsByNameAndBranchId(String name, Long branchId) {
         return productRepository.existsByNameAndBranchId(name, branchId);
     }
+
+    @Override
+    public Mono<Product> findById(Long id) {
+        return productRepository.findById(id)
+                .map(productEntityMapper::toModel);
+    }
+
+    @Override
+    public Mono<Void> deleteById(Long productId) {
+        return productRepository.deleteById(productId);
+    }
+
 }
