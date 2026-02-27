@@ -9,7 +9,7 @@ spring:
       mode: always
       platform: postgres
   r2dbc:
-    url: r2dbc:postgresql://${DB_URL:localhost:5432/franchise_db}
+    url: r2dbc:postgresql://${DB_URL:localhost:5432/franchise_db}?sslMode=disable
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:123456}
     pool:

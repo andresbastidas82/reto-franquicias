@@ -25,6 +25,21 @@ public class FranchiseRouter {
     @Bean
     @RouterOperations({
             @RouterOperation(
+                    path = "/api/v1/health",
+                    method = RequestMethod.GET,
+                    beanClass = FranchiseHandler.class,
+                    beanMethod = "healthCheck",
+                    operation = @Operation(
+                            operationId = "healthCheck",
+                            summary = "Health check endpoint",
+                            tags = {"Health"},
+                            responses = {
+                                    @ApiResponse(responseCode = "200", description = "Service is running",
+                                            content = @Content(schema = @Schema(implementation = GenericResponse.class)))
+                            }
+                    )
+            ),
+            @RouterOperation(
                     path = "/api/v1/franchise",
                     method = RequestMethod.POST,
                     beanClass = FranchiseHandler.class,
@@ -69,6 +84,7 @@ public class FranchiseRouter {
     })
     public RouterFunction<ServerResponse> franchiseRouterFunction(FranchiseHandler handler) {
         return RouterFunctions.route()
+                .GET("/api/v1/health", handler::healthCheck)
                 .POST("/api/v1/franchise", handler::createFranchise)
                 .PATCH("/api/v1/franchise/{id}", handler::updateNameFranchise)
                 .build();

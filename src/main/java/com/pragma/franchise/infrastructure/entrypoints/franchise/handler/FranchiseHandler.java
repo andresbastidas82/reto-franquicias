@@ -44,6 +44,16 @@ public class FranchiseHandler {
                 );
     }
 
+    public Mono<ServerResponse> healthCheck(ServerRequest request) {
+        return ServerResponse.ok().bodyValue(
+                GenericResponse.builder()
+                        .message("Service is running")
+                        .isSuccess(true)
+                        .statusCode(200)
+                        .build()
+        );
+    }
+
     public Mono<ServerResponse> updateNameFranchise(ServerRequest request) {
         return RequestParamExtractor
                 .extractLongPathVariable(request.pathVariable(ID), FRANCHISE_ID)
@@ -63,4 +73,5 @@ public class FranchiseHandler {
                         )
                 );
     }
+
 }
