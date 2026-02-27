@@ -6,7 +6,9 @@ import com.pragma.franchise.infrastructure.entrypoints.branch.dto.BranchResponse
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface BranchMapper {
 
     Branch toModel(BranchRequestDTO branchRequestDTO);

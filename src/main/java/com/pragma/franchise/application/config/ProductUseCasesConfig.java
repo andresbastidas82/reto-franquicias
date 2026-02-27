@@ -13,6 +13,7 @@ import com.pragma.franchise.domain.usecase.product.UpdateProductUseCase;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.ProductPersistenceAdapter;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.mapper.ProductEntityMapper;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.repository.ProductRepository;
+import com.pragma.franchise.infrastructure.adapters.persistenceadapter.resilience.ResilienceHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,8 +23,9 @@ public class ProductUseCasesConfig {
     @Bean
     public ProductPersistencePort productPersistencePort(
             ProductRepository repository,
-            ProductEntityMapper mapper) {
-        return new ProductPersistenceAdapter(repository, mapper);
+            ProductEntityMapper mapper,
+            ResilienceHelper resilienceHelper) {
+        return new ProductPersistenceAdapter(repository, mapper, resilienceHelper);
     }
 
     @Bean
