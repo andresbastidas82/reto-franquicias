@@ -1,0 +1,8 @@
+aws_region    = "us-east-1"
+project_name  = "franchise"
+environment   = "dev"
+db_username   = "postgres"
+db_password   = "your-secure-password-here"
+db_name       = "franchise_db"
+app_port      = 8081
+app_image_tag = "latest"

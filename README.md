@@ -7,6 +7,7 @@ Reactive API for managing franchises, branches and products, built with Spring B
 - Java 17+
 - Gradle 8+
 - PostgreSQL 14+
+- Docker & Docker Compose (optional, for containerized execution)
 
 ## Database setup
 
@@ -24,7 +25,25 @@ The application uses the following environment variables (with default values fo
 | `DB_USERNAME` | `postgres`                  |
 | `DB_PASSWORD` | `123456`                    |
 
-## Running locally
+## Running with Docker
+
+```bash
+# Build and start all services (app + PostgreSQL)
+docker-compose up --build
+
+# Run in background
+docker-compose up --build -d
+
+# Stop services
+docker-compose down
+
+# Stop and remove volumes (clears database)
+docker-compose down -v
+```
+
+The application will be available at `http://localhost:8081`.
+
+## Running locally (without Docker)
 
 ```bash
 # Clone the repository
@@ -114,6 +133,41 @@ The persistence layer implements three levels of protection using Resilience4j:
 1. **Timeout** (2s): Cuts off calls that exceed the time limit.
 2. **Bulkhead** (10 concurrent calls): Limits concurrency towards the database.
 3. **Circuit Breaker** (50% threshold): Opens the circuit if the failure rate exceeds 50% within a 5-call sliding window.
+
+## Deployment to AWS
+
+The `terraform/` directory contains the IaC to deploy the full solution on AWS:
+
+- VPC with public/private subnets, NAT Gateway
+- API Gateway HTTP (public entry point, free tier: 1M requests/month)
+- ALB internal (routes traffic from API Gateway to ECS)
+- ECS Fargate (0.25 vCPU, 512MB - minimal config)
+- RDS PostgreSQL db.t3.micro (free tier: 750h/month, 20GB gp2)
+- ECR (container registry)
+- CloudWatch Logs (7 days retention)
+
+### Steps
+
+```bash
+# 1. Configure variables
+cp terraform/terraform.tfvars.example terraform/terraform.tfvars
+# Edit terraform.tfvars with your values (especially db_password)
+
+# 2. Initialize and apply Terraform
+cd terraform
+terraform init
+terraform plan
+terraform apply
+
+# 3. Push Docker image to ECR
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <ecr_repository_url>
+docker build -t franchise-app .
+docker tag franchise-app:latest <ecr_repository_url>:latest
+docker push <ecr_repository_url>:latest
+
+# 4. Access the application via API Gateway
+# terraform output api_gateway_url
+```
 
 ## Tech stack
 
