@@ -8,6 +8,7 @@ import com.pragma.franchise.domain.usecase.franchise.UpdateFranchiseUseCase;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.FranchisePersistenceAdapter;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.mapper.FranchiseEntityMapper;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.repository.FranchiseRepository;
+import com.pragma.franchise.infrastructure.adapters.persistenceadapter.resilience.ResilienceHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,8 +18,9 @@ public class FranchiseUseCasesConfig {
     @Bean
     public FranchisePersistencePort franchisePersistencePort(
             FranchiseRepository repository,
-            FranchiseEntityMapper mapper) {
-        return new FranchisePersistenceAdapter(repository, mapper);
+            FranchiseEntityMapper mapper,
+            ResilienceHelper resilienceHelper) {
+        return new FranchisePersistenceAdapter(repository, mapper, resilienceHelper);
     }
 
     @Bean

@@ -9,6 +9,7 @@ import com.pragma.franchise.domain.usecase.branch.UpdateBranchUseCase;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.BranchPersistenceAdapter;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.mapper.BranchEntityMapper;
 import com.pragma.franchise.infrastructure.adapters.persistenceadapter.repository.BranchRepository;
+import com.pragma.franchise.infrastructure.adapters.persistenceadapter.resilience.ResilienceHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,8 +19,9 @@ public class BranchUseCasesConfig {
     @Bean
     public BranchPersistencePort branchPersistencePort(
             BranchRepository repository,
-            BranchEntityMapper mapper) {
-        return new BranchPersistenceAdapter(repository, mapper);
+            BranchEntityMapper mapper,
+            ResilienceHelper resilienceHelper) {
+        return new BranchPersistenceAdapter(repository, mapper, resilienceHelper);
     }
 
     @Bean

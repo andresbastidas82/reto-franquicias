@@ -14,3 +14,26 @@ spring:
     password: ${DB_PASSWORD:123456}
     pool:
       max-size: 10
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      databaseCB:
+        sliding-window-type: COUNT_BASED
+        # Ventana de 5 llamadas para evaluar el porcentaje de fallos
+        sliding-window-size: 5
+        # Si el 50% de las llamadas fallan (3 de 5), el circuito se abre
+        failure-rate-threshold: 50
+        # Tiempo que el circuito permanece OPEN antes de pasar a HALF_OPEN
+        wait-duration-in-open-state: 15s
+        # Llamadas permitidas en HALF_OPEN para probar si el servicio se recuperó
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+
+  bulkhead:
+    instances:
+      databaseBH:
+        # Máximo de llamadas concurrentes permitidas a la BD
+        max-concurrent-calls: 10
+        # Tiempo máximo de espera si se alcanza el límite de concurrencia
+        max-wait-duration: 500ms
